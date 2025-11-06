@@ -39,7 +39,7 @@ const CreateSelfIntroductionCard = () => {
                     boxSize='100px'
                     objectFit='cover'
                     borderRadius='full'
-                    src={preview ?? "https://i.pravatar.cc/300?img=4"}
+                    src={preview ?? "/initial_green_icon.png"}
                     alt="Profile image"
                     cursor="pointer"
                     transition="transform 0.15s ease"
