@@ -3,7 +3,7 @@
 import { Button, Card, FileUpload, Flex, Image, Input, Menu, Portal, Text } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 
-const CreateSelfIntroductionCard = () => {
+const EditSelfIntroductionCard = () => {
   const [preview, setPreview] = useState<string | null>(null)
   const [selected1, setSelected1] = useState<string>('項目1を選択▼')
   const [selected2, setSelected2] = useState<string>('項目2を選択▼')
@@ -46,7 +46,6 @@ const CreateSelfIntroductionCard = () => {
                       <Menu.Content>
                         <Menu.Item value="birthday" onClick={() => setSelected1('誕生日')}>誕生日</Menu.Item>
                         <Menu.Item value="occupation" onClick={() => setSelected1('職種')}>職種</Menu.Item>
-                        <Menu.Item value="occupation" onClick={() => setSelected1('職種')}>学年</Menu.Item>
                         <Menu.Item value="goal" onClick={() => setSelected1('目標')}>目標</Menu.Item>
                         <Menu.Item value="hobby" onClick={() => setSelected1('趣味')}>趣味</Menu.Item>
                         <Menu.Item value="interest" onClick={() => setSelected1('興味')}>興味</Menu.Item>
@@ -69,7 +68,6 @@ const CreateSelfIntroductionCard = () => {
                       <Menu.Content>
                         <Menu.Item value="birthday" onClick={() => setSelected2('誕生日')}>誕生日</Menu.Item>
                         <Menu.Item value="occupation" onClick={() => setSelected2('職種')}>職種</Menu.Item>
-                        <Menu.Item value="occupation" onClick={() => setSelected1('職種')}>学年</Menu.Item>
                         <Menu.Item value="goal" onClick={() => setSelected2('目標')}>目標</Menu.Item>
                         <Menu.Item value="hobby" onClick={() => setSelected2('趣味')}>趣味</Menu.Item>
                         <Menu.Item value="interest" onClick={() => setSelected2('興味')}>興味</Menu.Item>
@@ -116,10 +114,10 @@ const CreateSelfIntroductionCard = () => {
           </Card.Body>
         </Card.Root>
 
-        <Button variant="solid" colorPalette='teal' fontWeight='bold' size='lg'>作成</Button>
+        <Button variant="solid" colorPalette='teal' fontWeight='bold' size='lg'>保存</Button>
       </Flex>
     </>
   );
 };
 
-export default CreateSelfIntroductionCard;
+export default EditSelfIntroductionCard;
