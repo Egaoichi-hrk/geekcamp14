@@ -36,7 +36,7 @@ const Login: React.FC = () => {
       localStorage.setItem('user', JSON.stringify(data.user));
 
        if (data.has_card) {
-        router.push('/edit-card'); // すでにカードがある
+        router.push('/edit'); // すでにカードがある
       } else {
         router.push('/home'); // カード未作成
       }

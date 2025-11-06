@@ -67,14 +67,14 @@ async def create_card(card: CardCreate, user_id: str = Depends(get_current_user_
 
         # 公開用URL（仮）デプロイの時に変更
         share_url = f"https://yourapp.com/card/{card_id}"
-
+        print(share_url)
         return {
             "message": "カードを作成しました",
             "card_id": card_id,
             "share_url": share_url,
             "data": result.data
         }
-
+        
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"サーバーエラー: {str(e)}")
     
