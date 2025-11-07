@@ -10,16 +10,15 @@ const TabBar = () => {
     <Flex justify='center' align='center' direction='row' gap={6}>
       <Flex align='center' direction='column'>
         <IconButton variant='ghost' size='2xl' mb={-4}>
-          <FaRegPenToSquare color='gray' onClick={() => router.push("/create")} />
+          <FaRegPenToSquare color='teal' onClick={() => router.push("/edit")} />
         </IconButton>
-        {/*自己紹介カードが作成済みの場合は'編集'と表示*/}
-        <Text fontSize='12px' fontWeight='bold' color='gray'>作成</Text>
+        <Text fontSize='12px' fontWeight='bold' color='teal'>保存</Text>
       </Flex>
       <Flex align='center' direction='column'>
         <IconButton variant='ghost' size='2xl' mb={-4}>
-          <FaRegShareFromSquare color='gray' onClick={() => router.push("/share")} />
+          <FaRegShareFromSquare color='teal' />
         </IconButton>
-        <Text fontSize='12px' fontWeight='bold' color='gray'>共有</Text>
+        <Text fontSize='12px' fontWeight='bold' color='teal'>共有</Text>
       </Flex>
     </Flex>
   );

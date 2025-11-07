@@ -1,0 +1,26 @@
+'use client';
+import { Button, EmptyState, Flex, VStack } from "@chakra-ui/react"
+import { RiErrorWarningLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
+
+const Home = () => {
+  const router = useRouter();
+  return (
+    <Flex justify="center" align="center" height="90vh">
+    <EmptyState.Root>
+      <EmptyState.Content>
+        <EmptyState.Indicator>
+          <RiErrorWarningLine color='red' />
+        </EmptyState.Indicator>
+        <VStack textAlign="center">
+          <EmptyState.Title>自己紹介カードが作成されていません</EmptyState.Title>
+          <EmptyState.Description>今すぐ作成しますか？</EmptyState.Description>
+        </VStack>
+        <Button variant='solid' colorPalette='teal' rounded='lg' fontWeight='bold' onClick={() => router.push("/create")}>作成する</Button>
+      </EmptyState.Content>
+    </EmptyState.Root>
+    </Flex>
+  );
+};
+
+export default Home;

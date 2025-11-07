@@ -112,10 +112,9 @@ useEffect(() => {
 
   return (
     <>
-      <Flex justify='center' align='center' minH='100vh' direction='column' gap={20}>
+      <Flex justify='center' align='center' minH='90vh' direction='column' gap={20}>
         <Card.Root variant='elevated'>
           <Card.Body>
-
             <Flex justify='center' direction='column' mb={6}>
               <FileUpload.Root accept={["image/png", "image/jpeg", "image/webp"]}>
                 <FileUpload.HiddenInput
@@ -142,7 +141,14 @@ useEffect(() => {
                 </FileUpload.Trigger>
               </FileUpload.Root>
             </Flex>
-
+            <Flex direction='row' justify='center' mt={-4} mb={4} gap={2}>
+              <Image
+                boxSize='24px'
+                src='/instagram_icon.svg'
+                mt={2}
+              />
+              <Input variant='flushed' w='100px' css={{ "--focus-color": "teal" }} placeholder='ユーザーネーム'></Input>
+            </Flex>
             <Flex direction='row' gap={8}>
               <Flex direction='column'>
                 <Text fontSize='sm'>名前</Text>
@@ -153,7 +159,6 @@ useEffect(() => {
                 <Input variant='flushed' w='120px' css={{ "--focus-color": "teal" }} value={form.furigana} onChange={(e) => handleChange("furigana", e.target.value)}></Input>
               </Flex>
             </Flex>
-
             <Flex direction='row' gap={8}>
               <Flex align='start' mt={2} ml={-4} direction='column'>
                 <Menu.Root>
@@ -201,17 +206,16 @@ useEffect(() => {
                 </Menu.Root>
                 <Input variant='flushed' w='120px' ml={4} css={{ "--focus-color": "teal" }}  value={fieldMap[selected2] ? form[fieldMap[selected2]] || "" : ""} onChange={handleInputChange2}></Input>
               </Flex>
-
             </Flex>
             <Flex direction='column' mt={4}>
               <Text fontSize='sm'>自由記述</Text>
               <Input variant='flushed' w='270px' css={{ "--focus-color": "teal" }} mb={3}value={form.free_text}onChange={(e) => handleChange("free_text", e.target.value)}></Input>
             </Flex>
-
           </Card.Body>
         </Card.Root>
 
         <Button variant="solid" colorPalette='teal' fontWeight='bold' size='lg'onClick={handleUpdateCard}>保存</Button>
+
       </Flex>
     </>
   );
