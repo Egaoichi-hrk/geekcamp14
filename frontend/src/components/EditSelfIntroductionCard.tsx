@@ -18,7 +18,7 @@ const EditSelfIntroductionCard = () => {
 
   return (
     <>
-      <Flex justify='center' align='center' minH='100vh' direction='column' gap={20}>
+      <Flex justify='center' align='center' minH='90vh' direction='column' gap={20}>
         <Card.Root variant='elevated'>
           <Card.Body>
 
@@ -114,8 +114,6 @@ const EditSelfIntroductionCard = () => {
 
           </Card.Body>
         </Card.Root>
-
-        <Button variant="solid" colorPalette='teal' fontWeight='bold' size='lg'>保存</Button>
       </Flex>
     </>
   );
