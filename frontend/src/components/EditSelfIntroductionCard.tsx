@@ -23,31 +23,41 @@ const EditSelfIntroductionCard = () => {
     free_text: "",
   })
 
-  // 🟢 項目選択に応じたマッピング
-  const fieldMap: Record<string, keyof typeof form> = {
-    "誕生日": "birthday",
-    "職種": "job",
-    "学年": "student",
-    "目標": "goal",
-    "趣味": "hobby",
-    "興味": "interest",
-    "保有資格": "qualification",
-  }
+  // 🟢 フィールドマッピング
+const fieldMap: Record<string, keyof typeof form> = {
+  "誕生日": "birthday",
+  "職種": "job",
+  "学年": "student",
+  "目標": "goal",
+  "趣味": "hobby",
+  "興味": "interest",
+  "保有資格": "qualification",
+}
 
-  // 🟢 カード情報取得（例: /api/cards/{id}）
-  useEffect(() => {
-    const fetchCard = async () => {
-      try {
-        const res = await axios.get(`/api/get-card`, { withCredentials: true })
-        setForm(res.data.card)
-        setCardId(res.data.card.card_id)
-        if (res.data.card.photo_url) setPreview(res.data.card.photo_url)
-      } catch (err) {
-        console.error("カード取得失敗:", err)
-      }
+// 🟢 カード情報取得
+useEffect(() => {
+  const fetchCard = async () => {
+    try {
+      const res = await axios.get(`/api/get-card`, { withCredentials: true })
+      const card = res.data.card
+      setForm(card)
+      setCardId(card.card_id)
+      if (card.photo_url) setPreview(card.photo_url)
+
+      // 🟢 自動選択：値が入っているフィールドから選択肢を設定
+      const filledFields = Object.entries(fieldMap)
+        .filter(([label, key]) => card[key]) // 値が存在するもの
+        .map(([label]) => label)
+
+      if (filledFields.length > 0) setSelected1(filledFields[0])
+      if (filledFields.length > 1) setSelected2(filledFields[1])
+    } catch (err) {
+      console.error("カード取得失敗:", err)
     }
-    fetchCard()
-  }, [])
+  }
+  fetchCard()
+}, [])
+
 
   // 🟢 項目1・2入力処理
   const handleInputChange1 = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,7 +150,7 @@ const EditSelfIntroductionCard = () => {
               </Flex>
               <Flex direction='column'>
                 <Text fontSize='sm'>ふりがな</Text>
-                <Input variant='flushed' w='120px' css={{ "--focus-color": "teal" }} value={form.name} onChange={(e) => handleChange("name", e.target.value)}></Input>
+                <Input variant='flushed' w='120px' css={{ "--focus-color": "teal" }} value={form.furigana} onChange={(e) => handleChange("furigana", e.target.value)}></Input>
               </Flex>
             </Flex>
 
@@ -195,7 +205,7 @@ const EditSelfIntroductionCard = () => {
             </Flex>
             <Flex direction='column' mt={4}>
               <Text fontSize='sm'>自由記述</Text>
-              <Input variant='flushed' w='270px' css={{ "--focus-color": "teal" }} mb={3}value={form.name}onChange={(e) => handleChange("name", e.target.value)}></Input>
+              <Input variant='flushed' w='270px' css={{ "--focus-color": "teal" }} mb={3}value={form.free_text}onChange={(e) => handleChange("free_text", e.target.value)}></Input>
             </Flex>
 
           </Card.Body>

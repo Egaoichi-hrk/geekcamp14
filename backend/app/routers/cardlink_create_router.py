@@ -115,7 +115,20 @@ async def update_card(card_id: str, card: CardUpdate, user_id: str = Depends(get
         "message": "カードを更新しました",
         "card": result.data[0]
     }
-    
+
+@router.get("/cards/me")
+async def get_my_card(user_id: str = Depends(get_current_user_id)):
+    """
+    ログイン中ユーザーのカード情報を取得
+    """
+    result = supabase.table("cards").select("*").eq("user_id", user_id).execute()
+
+    if not result.data:
+        raise HTTPException(status_code=404, detail="カードが見つかりません")
+
+    return {"card": result.data[0]}
+
+
 # カード削除
 @router.delete("/cards/{card_id}")
 async def delete_card(card_id: str, user_id: str = Depends(get_current_user_id)):
