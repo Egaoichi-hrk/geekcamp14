@@ -225,6 +225,7 @@ const CreateSelfIntroductionCard = () => {
           </Card.Body>
         </Card.Root>
       </Flex>
+      <Button variant="solid" colorPalette='teal' fontWeight='bold' size='lg' onClick={handleCreateCard}>作成</Button>
     </>
   );
 };

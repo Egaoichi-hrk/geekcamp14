@@ -81,16 +81,12 @@ useEffect(() => {
         Object.entries(form).filter(([_, v]) => v !== "" && v !== null)
       )
 
-      const res = await axios.patch(
-        `/api/update-card?card_id=${cardId}`,
-        payload,
-        { withCredentials: true }
-      )
+   await axios.patch(`/api/update-card?card_id=${cardId}`, payload, { withCredentials: true });
 
       if (file) {
         const formData = new FormData()
         formData.append("file", file)
-        await axios.post(`/api/upload-photo?card_id=${cardId}`, formData, {
+        await axios.post(`/api/upload-photo/${cardId}`, formData, {
           withCredentials: true,
         })
       }
