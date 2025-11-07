@@ -3,7 +3,7 @@ import { Button, EmptyState, Flex, VStack } from "@chakra-ui/react"
 import { RiErrorWarningLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 
-const HomeEmpty = () => {
+const Home = () => {
   const router = useRouter();
   return (
     <Flex justify="center" align="center" height="90vh">
@@ -23,4 +23,4 @@ const HomeEmpty = () => {
   );
 };
 
-export default HomeEmpty;
+export default Home;

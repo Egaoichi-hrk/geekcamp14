@@ -127,7 +127,7 @@ const handleCreateCard = async () => {
 
   return (
     <>
-      <Flex justify='center' align='center' minH='100vh' direction='column' gap={20}>
+      <Flex justify='center' align='center' minH='90vh' direction='column' gap={20}>
         <Card.Root variant='elevated'>
           <Card.Body>
 
@@ -226,8 +226,6 @@ const handleCreateCard = async () => {
 
           </Card.Body>
         </Card.Root>
-
-        <Button variant="solid" colorPalette='teal' fontWeight='bold' size='lg' onClick={handleCreateCard}>作成</Button>
       </Flex>
     </>
   );
