@@ -21,7 +21,6 @@ const EditSelfIntroductionCard = () => {
       <Flex justify='center' align='center' minH='90vh' direction='column' gap={20}>
         <Card.Root variant='elevated'>
           <Card.Body>
-
             <Flex justify='center' direction='column' mb={6}>
               <FileUpload.Root accept={["image/png", "image/jpeg", "image/webp"]}>
                 <FileUpload.HiddenInput
@@ -48,7 +47,12 @@ const EditSelfIntroductionCard = () => {
                 </FileUpload.Trigger>
               </FileUpload.Root>
             </Flex>
-
+            <Flex justify='center' mt={-4} mb={4}>
+              <Image
+                boxSize='24px'
+                src='/instagram_icon.svg'
+              />
+            </Flex>
             <Flex direction='row' gap={8}>
               <Flex direction='column'>
                 <Text fontSize='sm'>名前</Text>
@@ -59,7 +63,6 @@ const EditSelfIntroductionCard = () => {
                 <Input variant='flushed' w='120px' css={{ "--focus-color": "teal" }}></Input>
               </Flex>
             </Flex>
-
             <Flex direction='row' gap={8}>
               <Flex align='start' mt={2} ml={-4} direction='column'>
                 <Menu.Root>
@@ -105,13 +108,11 @@ const EditSelfIntroductionCard = () => {
                 </Menu.Root>
                 <Input variant='flushed' w='120px' ml={4} css={{ "--focus-color": "teal" }}></Input>
               </Flex>
-
             </Flex>
             <Flex direction='column' mt={4}>
               <Text fontSize='sm'>自由記述</Text>
               <Input variant='flushed' w='270px' css={{ "--focus-color": "teal" }} mb={3}></Input>
             </Flex>
-
           </Card.Body>
         </Card.Root>
       </Flex>

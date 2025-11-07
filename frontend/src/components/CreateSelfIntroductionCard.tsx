@@ -4,8 +4,6 @@ import { Button, Card, Flex, Input, Image, Menu, Portal, Text, FileUpload } from
 import React, { useEffect, useState } from "react"
 import axios from "axios";
 
-
-
 const CreateSelfIntroductionCard = () => {
   const [form, setForm] = useState({
     name: "",
