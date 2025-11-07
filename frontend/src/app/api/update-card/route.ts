@@ -18,7 +18,7 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "アクセストークンがありません" }, { status: 401 });
     }
 
-    const res = await fetch(`http://localhost:8000/cards/${card_id}`, {
+    const res = await fetch(`http://localhost:8000/api/cardlink/cards/${card_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
