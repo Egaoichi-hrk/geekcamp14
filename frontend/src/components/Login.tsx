@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { Button, Card, Field, Flex, Input, InputGroup, Stack, Link,Text } from "@chakra-ui/react"
+import { Button, Card, Field, Flex, Input, InputGroup, Stack, Link, Text } from "@chakra-ui/react"
 import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ const Login: React.FC = () => {
       // 成功時:user情報のみ保存して遷移
       localStorage.setItem('user', JSON.stringify(data.user));
 
-       if (data.has_card) {
+      if (data.has_card) {
         router.push('/edit'); // すでにカードがある
       } else {
         router.push('/home'); // カード未作成
@@ -59,18 +59,18 @@ const Login: React.FC = () => {
               <Field.Root>
                 <Field.Label>メールアドレス</Field.Label>
                 <InputGroup startElement={<MdOutlineMailOutline />}>
-                <Input size='lg' variant='subtle' css={{ "--focus-color": "teal" }} placeholder='メールアドレスを入力' value={email}  onChange={(e) => setEmail(e.target.value)}/>
+                  <Input size='lg' variant='subtle' css={{ "--focus-color": "teal" }} placeholder='メールアドレスを入力' value={email} onChange={(e) => setEmail(e.target.value)} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
                 <Field.Label>パスワード</Field.Label>
                 <InputGroup startElement={<IoKeyOutline />}>
-                  <Input size='lg' variant='subtle' css={{ "--focus-color": "teal" }} placeholder='パスワードを入力' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                  <Input size='lg' variant='subtle' css={{ "--focus-color": "teal" }} placeholder='パスワードを入力' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </InputGroup>
               </Field.Root>
               {error && (
-              <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
-               )}
+                <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
+              )}
             </Stack>
           </Card.Body>
           <Card.Title fontSize='sm' fontWeight='normal' textAlign='center' mb={4}>
@@ -80,7 +80,7 @@ const Login: React.FC = () => {
             </Link>
           </Card.Title>
           <Card.Footer justifyContent="center">
-            <Button variant="solid" colorPalette='teal'onClick={handleLogin}>ログイン</Button>
+            <Button variant="solid" colorPalette='teal' onClick={handleLogin}>ログイン</Button>
           </Card.Footer>
         </Card.Root>
       </Flex>

@@ -276,7 +276,7 @@ useEffect(() => {
           </Flex>
         )}
         <Flex align='center' direction='column'>
-          <IconButton variant='ghost' size='2xl' mb={-4} onClick={() => { router.push("/login") }}>
+          <IconButton variant='ghost' size='2xl' mb={-4} onClick={() => { router.push("/") }}>
             <FiLogOut color='teal' />
           </IconButton>
           <Text fontSize='12px' fontWeight='bold' color='teal'>ログアウト</Text>
