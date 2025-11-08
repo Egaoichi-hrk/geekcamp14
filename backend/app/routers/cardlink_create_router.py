@@ -171,20 +171,40 @@ async def view_card(card_id: str):
 
     return public_card
 
-#写真画像登録
+
+
 @router.post("/upload_photo/{card_id}")
 async def upload_photo(card_id: str, file: UploadFile, user_id: str = Depends(get_current_user_id)):
     try:
         file_ext = file.filename.split(".")[-1]
         file_name = f"{card_id}/{uuid4()}.{file_ext}"
-        
+
+        # 画像アップロード
         res = supabase.storage.from_("card_photos").upload(file_name, await file.read())
-        if res.status_code != 200:
-            raise HTTPException(status_code=500, detail="アップロードに失敗しました")
-        
+
+        if not res or res.get("error"):
+            raise HTTPException(status_code=500, detail="画像のアップロードに失敗しました")
+
+        # 公開URL取得
         public_url = supabase.storage.from_("card_photos").get_public_url(file_name)
-        return {"photo_url": public_url}
-    
+
+        # 🆕 DB の photo_url を更新
+        update_res = (
+            supabase.table("cards")
+            .update({"photo_url": public_url})
+            .eq("card_id", card_id)
+            .eq("user_id", user_id)  # セキュリティ確保
+            .execute()
+        )
+
+        if not update_res or len(update_res.data) == 0:
+            raise HTTPException(status_code=404, detail="カードが見つかりません")
+
+        return {
+            "message": "Upload success",
+            "photo_url": public_url,
+        }
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
