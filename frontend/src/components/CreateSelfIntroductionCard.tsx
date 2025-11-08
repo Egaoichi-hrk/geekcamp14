@@ -110,6 +110,8 @@ const CreateSelfIntroductionCard = () => {
       const { card_id } = res.data;
       alert("カード作成に成功しました！");
 
+      router.push("/edit");
+
       // 2️⃣ 写真アップロード（Cookie送信を許可）
       if (file) {
         const formData = new FormData();
@@ -233,7 +235,7 @@ const CreateSelfIntroductionCard = () => {
       <Flex justify='center' align='center' direction='row' gap={6}>
         <Flex align='center' direction='column'>
           <IconButton variant='ghost' size='2xl' mb={-4} onClick={handleCreateCard}>
-            <FaRegPenToSquare color='teal' onClick={() => router.push("/edit")} />
+            <FaRegPenToSquare color='teal'/>
           </IconButton>
           <Text fontSize='12px' fontWeight='bold' color='teal'>保存</Text>
         </Flex>
