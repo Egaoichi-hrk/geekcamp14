@@ -86,7 +86,7 @@ useEffect(() => {
       if (file) {
         const formData = new FormData()
         formData.append("file", file)
-        await axios.post(`/api/upload-photo/${cardId}`, formData, {
+        await axios.post(`/api/upload-photo?card_id=${cardId}`, formData, {
           withCredentials: true,
         })
       }
