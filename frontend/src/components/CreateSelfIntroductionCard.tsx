@@ -3,7 +3,7 @@
 import { Button, Card, Flex, IconButton, Input, Image, Menu, Portal, Text, FileUpload } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react"
 import axios from "axios";
-import { FaLink, FaRegCircleCheck, FaRegPenToSquare } from "react-icons/fa6";
+import { FaRegPenToSquare } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
@@ -22,7 +22,7 @@ const CreateSelfIntroductionCard = () => {
     interest: "",
     qualification: "",
     free_text: "",
-    sns_link:"",
+    sns_link: "",
   });
   const [preview, setPreview] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null);
@@ -98,7 +98,7 @@ const CreateSelfIntroductionCard = () => {
       goal: form.goal || null,
       hobby: form.hobby || null,
       qualification: form.qualification || null,
-      sns_link: form.sns_link ||null, // 現状フォーム未対応なのでnull
+      sns_link: form.sns_link || null, // 現状フォーム未対応なのでnull
       free_text: form.free_text || null,
       birthday: form.birthday || null, // "YYYY-MM-DD"形式 or null
     };
@@ -129,17 +129,17 @@ const CreateSelfIntroductionCard = () => {
       alert(`カード作成に失敗しました。\n${err.response?.data?.error || err.message}`);
     }
   };
-   // 🟢 共有URLコピー
+  // 🟢 共有URLコピー
   const handleCopy = async () => {
     if (!cardId) return;
     const url = `http://localhost:3000/share/${cardId}`;
     try {
-    await navigator.clipboard.writeText(url);
-    alert("URLをコピーしました！");
-  } catch (err) {
-    alert("コピーに失敗しました");
-  }
-};
+      await navigator.clipboard.writeText(url);
+      alert("URLをコピーしました！");
+    } catch (err) {
+      alert("コピーに失敗しました");
+    }
+  };
 
 
   return (
@@ -179,7 +179,7 @@ const CreateSelfIntroductionCard = () => {
                 src='/instagram_icon.svg'
                 mt={2}
               />
-              <Input variant='flushed' w='100px' css={{ "--focus-color": "teal" }} placeholder='ユーザーネーム'onChange={e => handleChange("sns_link", e.target.value)}></Input>
+              <Input variant='flushed' w='100px' css={{ "--focus-color": "teal" }} placeholder='ユーザーネーム' onChange={e => handleChange("sns_link", e.target.value)}></Input>
             </Flex>
             <Flex direction='row' gap={8}>
               <Flex direction='column'>
@@ -253,22 +253,6 @@ const CreateSelfIntroductionCard = () => {
           </IconButton>
           <Text fontSize='12px' fontWeight='bold' color='teal'>保存</Text>
         </Flex>
-        {shareAlert ? (
-          <Flex align='center' direction='column'>
-            <IconButton variant='ghost' size='2xl' mb={-4} onClick={() => setShareAlert(!shareAlert)}>
-              <FaRegCircleCheck color='teal' />
-            </IconButton>
-            <Text fontSize='12px' fontWeight='bold' color='teal'>完了</Text>
-          </Flex>
-        ) : (
-          <Flex align='center' direction='column'>
-            <IconButton variant='ghost' size='2xl' mb={-4} onClick={() => setShareAlert(!shareAlert)}>
-              <FaLink color='teal' />
-            </IconButton>
-            <Text fontSize='12px' fontWeight='bold' color='teal'onClick={handleCopy}>共有</Text>
-          </Flex>
-        )}
-
         <Flex align='center' direction='column'>
           <IconButton
             variant='ghost'

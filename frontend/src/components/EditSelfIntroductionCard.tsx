@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Card, FileUpload, Flex, IconButton, Image, Input, Menu, Portal, Text } from "@chakra-ui/react"
+import { Button, Card, Clipboard, FileUpload, Flex, IconButton, Image, Input, Menu, Portal, Text } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { FaLink, FaRegCircleCheck, FaRegPenToSquare } from "react-icons/fa6";
@@ -26,7 +26,7 @@ const EditSelfIntroductionCard = () => {
     interest: "",
     qualification: "",
     free_text: "",
-    sns_link:"",
+    sns_link: "",
   })
 
   // フィールドマッピング
@@ -242,7 +242,13 @@ const EditSelfIntroductionCard = () => {
           </Flex>
         ) : (
           <Flex align='center' direction='column'>
-            <IconButton variant='ghost' size='2xl' mb={-4} onClick={() => setShareAlert(!shareAlert)}><FaLink color='teal' /></IconButton>
+            <Clipboard.Root value={`http://localhost:3000/share/${cardId}`} onClick={() => setShareAlert(!shareAlert)}>
+              <Clipboard.Trigger asChild>
+                <IconButton variant='ghost' size='2xl' mb={-4}>
+                  <FaLink color='teal' />
+                </IconButton>
+            </Clipboard.Trigger>
+            </Clipboard.Root>
             <Text fontSize='12px' fontWeight='bold' color='teal'>共有</Text>
           </Flex>
         )}
