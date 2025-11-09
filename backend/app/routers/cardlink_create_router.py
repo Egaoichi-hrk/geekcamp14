@@ -6,8 +6,15 @@ import jwt
 from datetime import date, datetime, timezone
 from app.schemas.main_schema import CardCreate,CardUpdate
 from app.core.config import settings
+from fastapi import File
+from supabase import create_client, Client
 
 router = APIRouter()
+
+from supabase import create_client
+
+def get_supabase_for_user(token: str) -> Client:
+    return create_client(settings.SUPABASE_URL, token)
 
 # JWTからユーザーIDを取得
 def get_current_user_id(authorization: str = Header(...)) -> str:
@@ -86,9 +93,12 @@ async def update_card(card_id: str, card: CardUpdate, user_id: str = Depends(get
     """
     認証済みユーザーが自分のカードを部分更新するエンドポイント
     """
+    print("📩 PATCH request received:", card_id, card.dict())
 
     # 既存カードの存在確認
     existing = supabase.table("cards").select("*").eq("card_id", card_id).execute()
+    print("🧾 Existing card:", existing.data)
+
     if not existing.data:
         raise HTTPException(status_code=404, detail="カードが見つかりません")
 
@@ -98,6 +108,7 @@ async def update_card(card_id: str, card: CardUpdate, user_id: str = Depends(get
 
     # 更新データ（指定された項目だけ抽出）
     update_data = card.dict(exclude_unset=True)
+    print("🧩 Update data:", update_data)
     if not update_data:
         raise HTTPException(status_code=400, detail="更新内容がありません")
 
@@ -106,15 +117,18 @@ async def update_card(card_id: str, card: CardUpdate, user_id: str = Depends(get
 
     # Supabaseへ更新
     result = supabase.table("cards").update(update_data).eq("card_id", card_id).execute()
+   # 更新後データを再取得（明示的に select）
+    updated_card = supabase.table("cards").select("*").eq("card_id", card_id).execute()
 
-    if not result.data:
+    print("📤 Supabase update result:", updated_card)
+
+    if not updated_card.data:
         raise HTTPException(status_code=500, detail="カードの更新に失敗しました")
 
-    # 更新後のデータを返す
     return {
-        "message": "カードを更新しました",
-        "card": result.data[0]
-    }
+    "message": "カードを更新しました",
+    "card": updated_card.data[0],
+   }
 
 @router.get("/cards/me")
 async def get_my_card(user_id: str = Depends(get_current_user_id)):
@@ -203,38 +217,57 @@ async def upload_photo(card_id: str, file: UploadFile, user_id: str = Depends(ge
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
-# -------------------------
-# 更新用
-# -------------------------
 @router.put("/upload_photo/{card_id}/photo")
-async def update_card_photo(card_id: str, file: UploadFile, user_id: str = Depends(get_current_user_id)):
-    existing = supabase.table("cards").select("*").eq("card_id", card_id).execute()
+async def update_card_photo(
+    card_id: str,
+    file: UploadFile = File(...),
+    authorization: str = Header(...)
+):
+    # JWTからuser_id取得
+    user_id = get_current_user_id(authorization)
+
+    # RLS対応のユーザークライアントでSupabase取得
+    supabase_user = get_supabase_for_user(authorization.split(" ")[1])
+
+    # --- カード存在確認 ---
+    existing = supabase_user.table("cards").select("*").eq("card_id", card_id).execute()
     if not existing.data:
         raise HTTPException(status_code=404, detail="カードが見つかりません")
+    
+    # --- 所有者チェック ---
     if existing.data[0]["user_id"] != user_id:
         raise HTTPException(status_code=403, detail="編集権限がありません")
 
+    # --- ファイル情報 ---
     file_ext = file.filename.split(".")[-1]
     file_name = f"{card_id}/photo.{file_ext}"
 
-    # 上書きアップロード（metadata付き）
-    res = supabase.storage.from_("card_photos").upload(
-        file_name,
-        await file.read(),
-        {"upsert": True, "metadata": {"owner": user_id}}
-    )
-    if res.get("error"):
-        raise HTTPException(status_code=500, detail=f"Upload failed: {res['error']['message']}")
+    # --- ファイルアップロード (RLSユーザー権限で) ---
+    try:
+        upload_response = supabase_user.storage.from_("card_photos").upload(
+            file_name,
+            await file.read(),
+            {"content-type": file.content_type},
+            upsert=True  # 上書き対応
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
-    public_url = supabase.storage.from_("card_photos").get_public_url(file_name)["publicUrl"]
+    # --- 公開URL取得 ---
+    try:
+        public_url = supabase_user.storage.from_("card_photos").get_public_url(file_name)["publicUrl"]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"URL取得に失敗: {str(e)}")
 
-    supabase.table("cards").update({"photo_url": public_url, "user_id": user_id}).eq("card_id", card_id).execute()
+    # --- DB更新 ---
+    try:
+        update_result = supabase_user.table("cards").update({"photo_url": public_url}).eq("card_id", card_id).execute()
+        if not update_result.data:
+            raise HTTPException(status_code=500, detail="カードの更新に失敗しました")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"DB更新エラー: {str(e)}")
 
     return {"message": "写真を更新しました", "photo_url": public_url}
-
-
 @router.get("/{card_id}/photo")
 async def get_card_photo(card_id: str):
     card = supabase.table("cards").select("*").eq("card_id", card_id).execute()
