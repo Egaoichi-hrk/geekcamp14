@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Card, FileUpload, Flex, IconButton, Image, Input, Menu, Portal, Text } from "@chakra-ui/react"
+import { Button, Card, Clipboard, FileUpload, Flex, IconButton, Image, Input, Menu, Portal, Text } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { FaLink, FaRegCircleCheck, FaRegPenToSquare } from "react-icons/fa6";
@@ -26,7 +26,7 @@ const EditSelfIntroductionCard = () => {
     interest: "",
     qualification: "",
     free_text: "",
-    sns_link:"",
+    sns_link: "",
   })
 
   // 🟢 フィールドマッピング
@@ -39,7 +39,7 @@ const EditSelfIntroductionCard = () => {
     "興味": "interest",
     "保有資格": "qualification",
   }
-useEffect(() => {
+  useEffect(() => {
     const fetchCard = async () => {
       try {
         const res = await axios.get(`/api/get-card`, { withCredentials: true })
@@ -76,7 +76,7 @@ useEffect(() => {
       if (!cardId) return;
       try {
         const res = await axios.get(`/api/get-photo`, {
-        params: { card_id: cardId }, // ← cardId は useState などで保持している値
+          params: { card_id: cardId }, // ← cardId は useState などで保持している値
         });
         setPreview(res.data.photo_url ?? "/initial_green_icon.png");
       } catch (err) {
@@ -86,7 +86,7 @@ useEffect(() => {
     };
     fetchPhoto();
   }, [cardId]);
-   // 🟢 選択状態を localStorage に保存
+  // 🟢 選択状態を localStorage に保存
   const handleSelect1 = (label: string) => {
     setSelected1(label)
     if (cardId) localStorage.setItem(`selected1_${cardId}`, label)
@@ -109,7 +109,7 @@ useEffect(() => {
   const handleChange = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }))
   }
- // -----------------------
+  // -----------------------
   // カード更新
   // -----------------------
   const handleUpdateCard = async () => {
@@ -125,9 +125,9 @@ useEffect(() => {
       if (file) {
         const formData = new FormData()
         formData.append("file", file)
-         const res = await axios.post(`/api/upload-card/${cardId}/photo`, formData, {
-        withCredentials: true,
-      })
+        const res = await axios.post(`/api/upload-card/${cardId}/photo`, formData, {
+          withCredentials: true,
+        })
         if (res.data.photo_url) setPreview(res.data.photo_url)
       }
 
@@ -186,7 +186,7 @@ useEffect(() => {
                 src='/instagram_icon.svg'
                 mt={2}
               />
-              <Input variant='flushed' w='100px' css={{ "--focus-color": "teal" }} placeholder='ユーザーネーム' value={form.sns_link??""} onChange={e => handleChange("sns_link", e.target.value)}></Input>
+              <Input variant='flushed' w='100px' css={{ "--focus-color": "teal" }} placeholder='ユーザーネーム' value={form.sns_link ?? ""} onChange={e => handleChange("sns_link", e.target.value)}></Input>
             </Flex>
             <Flex direction='row' gap={8}>
               <Flex direction='column'>
@@ -270,9 +270,13 @@ useEffect(() => {
           </Flex>
         ) : (
           <Flex align='center' direction='column'>
-            <IconButton variant='ghost' size='2xl' mb={-4} onClick={() => setShareAlert(!shareAlert)}>
-              <FaLink color='teal' />
-            </IconButton>
+            <Clipboard.Root value={`http://localhost:3000/share/${cardId}`} onClick={() => setShareAlert(!shareAlert)}>
+              <Clipboard.Trigger asChild>
+                <IconButton variant='ghost' size='2xl' mb={-4}>
+                  <FaLink color='teal' />
+                </IconButton>
+            </Clipboard.Trigger>
+            </Clipboard.Root>
             <Text fontSize='12px' fontWeight='bold' color='teal'>共有</Text>
           </Flex>
         )}
