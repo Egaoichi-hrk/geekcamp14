@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
   try {
     // ✅ URLパラメータから card_id を取得
     const { searchParams } = new URL(req.url);
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     const res = await fetch(
       `http://localhost:8000/api/cardlink/upload_photo/${card_id}/photo`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -3,11 +3,12 @@
 import { Card, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "next/navigation"; // URLパラメータ取得用
+import { useParams } from "next/navigation";
 
 const Share = () => {
   const params = useParams();
-  const { card_id } = params; // /share/[card_id] 用
+  const { card_id } = params;
+
   const [form, setForm] = useState({
     name: "",
     furigana: "",
@@ -24,6 +25,23 @@ const Share = () => {
 
   const [preview, setPreview] = useState<string | null>(null);
 
+  // 項目の優先順（項目1・項目2を自動選択）
+  const fieldPriority: (keyof typeof form)[] = [
+    "birthday", "job", "student", "goal", "hobby", "interest", "qualification"
+  ];
+
+  // 項目1・項目2を取得
+  const getFirstTwoFields = () => {
+    const filledFields = fieldPriority.filter(key => form[key]);
+    return [
+      filledFields[0] ? form[filledFields[0]] : null,
+      filledFields[1] ? form[filledFields[1]] : null
+    ];
+  }
+
+  const [item1, item2] = getFirstTwoFields();
+
+  // カードデータ取得（card_id が変わった時だけ）
   useEffect(() => {
     const fetchCard = async () => {
       try {
@@ -45,22 +63,23 @@ const Share = () => {
           sns_link: data.sns_link ?? "",
         });
 
-        if (data.photo_url) {
-          setPreview(data.photo_url);
-        }
+        if (data.photo_url) setPreview(data.photo_url);
       } catch (err: any) {
         console.error("カード取得エラー:", err);
       }
     };
 
     fetchCard();
+  }, [card_id]);
 
+  // blob URL クリーンアップ用 useEffect
+  useEffect(() => {
     return () => {
       if (preview && preview.startsWith("blob:")) {
         URL.revokeObjectURL(preview);
       }
     };
-  }, [card_id, preview]);
+  }, [preview]);
 
   return (
     <Flex justify="center" align="center" minH="100vh" direction="column" gap={6}>
@@ -99,15 +118,11 @@ const Share = () => {
           {/* 名前・ふりがな */}
           <Flex direction="row" gap={8} mb={4}>
             <Flex direction="column">
-              <Text fontSize="sm" color="gray.500">
-                名前
-              </Text>
+              <Text fontSize="sm" color="gray.500">名前</Text>
               <Text fontSize="md">{form.name || "未設定"}</Text>
             </Flex>
             <Flex direction="column">
-              <Text fontSize="sm" color="gray.500">
-                ふりがな
-              </Text>
+              <Text fontSize="sm" color="gray.500">ふりがな</Text>
               <Text fontSize="md">{form.furigana || "未設定"}</Text>
             </Flex>
           </Flex>
@@ -115,40 +130,18 @@ const Share = () => {
           {/* 項目1・項目2 */}
           <Flex direction="row" gap={8} mb={4}>
             <Flex direction="column">
-              <Text fontSize="sm" color="gray.500">
-                項目1
-              </Text>
-              <Text fontSize="md">
-                {form.job ||
-                  form.student ||
-                  form.birthday ||
-                  form.goal ||
-                  form.hobby ||
-                  form.interest ||
-                  form.qualification ||
-                  "未設定"}
-              </Text>
+              <Text fontSize="sm" color="gray.500">項目1</Text>
+              <Text fontSize="md">{item1 || "未設定"}</Text>
             </Flex>
             <Flex direction="column">
-              <Text fontSize="sm" color="gray.500">
-                項目2
-              </Text>
-              <Text fontSize="md">
-                {form.interest ||
-                  form.hobby ||
-                  form.goal ||
-                  form.qualification ||
-                  form.birthday ||
-                  "未設定"}
-              </Text>
+              <Text fontSize="sm" color="gray.500">項目2</Text>
+              <Text fontSize="md">{item2 || "未設定"}</Text>
             </Flex>
           </Flex>
 
           {/* 自由記述 */}
           <Flex direction="column" mt={2}>
-            <Text fontSize="sm" color="gray.500">
-              自由記述
-            </Text>
+            <Text fontSize="sm" color="gray.500">自由記述</Text>
             <Text fontSize="md">{form.free_text || "なし"}</Text>
           </Flex>
         </Card.Body>
