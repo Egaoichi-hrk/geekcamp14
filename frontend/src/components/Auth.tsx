@@ -43,15 +43,16 @@ const Auth = () => {
   };
 
   return (
-    <Flex justify='center' align='center' minH='100vh'>
+    <Flex justify='center' align='center' minH='100vh' direction='column'>
+      <Text color='teal' textStyle='5xl' fontWeight={900} mb={6}>Know Me !</Text>
       <Card.Root maxW="sm" variant='elevated'>
-        <Card.Header justifyContent='center'>
+        <Card.Header textAlign='center'>
           <Card.Title>新規ユーザー登録</Card.Title>
         </Card.Header>
         <Card.Body>
           <Stack gap="4" w="full">
             <Field.Root>
-              <Field.Label>メールアドレス</Field.Label>
+              <Field.Label fontWeight='bold'>メールアドレス</Field.Label>
               <InputGroup startElement={<MdOutlineMailOutline />}>
                 <Input
                   size='lg'
@@ -64,7 +65,7 @@ const Auth = () => {
               </InputGroup>
             </Field.Root>
             <Field.Root>
-              <Field.Label>パスワード</Field.Label>
+              <Field.Label fontWeight='bold'>パスワード</Field.Label>
               <InputGroup startElement={<IoKeyOutline />}>
                 <Input
                   size='lg'
@@ -81,7 +82,7 @@ const Auth = () => {
           </Stack>
         </Card.Body>
         <Card.Footer justifyContent="center">
-          <Button variant="solid" colorPalette='teal' onClick={handleSignup} >
+          <Button variant="solid" colorPalette='teal' fontWeight='bold' onClick={handleSignup} >
             登録
           </Button>
         </Card.Footer>

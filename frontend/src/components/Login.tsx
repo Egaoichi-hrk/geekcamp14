@@ -49,21 +49,22 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Flex justify='center' align='center' minH='100vh'>
+      <Flex justify='center' align='center' minH='100vh' direction='column'>
+        <Text color='teal' textStyle='5xl' fontWeight={900} mb={6}>Know Me !</Text>
         <Card.Root maxW="sm" variant='elevated'>
-          <Card.Header justifyContent='center'>
+          <Card.Header textAlign='center'>
             <Card.Title>ログイン</Card.Title>
           </Card.Header>
           <Card.Body>
             <Stack gap="4" w="full">
               <Field.Root>
-                <Field.Label>メールアドレス</Field.Label>
+                <Field.Label fontWeight='bold'>メールアドレス</Field.Label>
                 <InputGroup startElement={<MdOutlineMailOutline />}>
                   <Input size='lg' variant='subtle' css={{ "--focus-color": "teal" }} placeholder='メールアドレスを入力' value={email} onChange={(e) => setEmail(e.target.value)} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
-                <Field.Label>パスワード</Field.Label>
+                <Field.Label fontWeight='bold'>パスワード</Field.Label>
                 <InputGroup startElement={<IoKeyOutline />}>
                   <Input size='lg' variant='subtle' css={{ "--focus-color": "teal" }} placeholder='パスワードを入力' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </InputGroup>
@@ -80,7 +81,7 @@ const Login: React.FC = () => {
             </Link>
           </Card.Title>
           <Card.Footer justifyContent="center">
-            <Button variant="solid" colorPalette='teal' onClick={handleLogin}>ログイン</Button>
+            <Button variant="solid" colorPalette='teal' fontWeight='bold' onClick={handleLogin}>ログイン</Button>
           </Card.Footer>
         </Card.Root>
       </Flex>
