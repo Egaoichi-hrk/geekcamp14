@@ -95,7 +95,7 @@ async def create_card(card: CardCreate, user_id: str = Depends(get_current_user_
 @router.patch("/cards/{card_id}")
 async def update_card(card_id: str, card: CardUpdate, user_id: str = Depends(get_current_user_id)):
     """認証済みユーザーが自分のカードを部分更新するエンドポイント"""
-    print("📩 PATCH request received:", card_id, card.dict())
+    print("PATCH request received:", card_id, card.dict())
 
     existing = supabase.table("cards").select("*").eq("card_id", card_id).execute()
     if not existing.data:
