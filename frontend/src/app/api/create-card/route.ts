@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "アクセストークンがありません" }, { status: 401 });
     }
 
-    const res = await fetch("http://localhost:8000/api/cardlink/cards_create", {
+    const res = await fetch(`${process.env.BACKEND_URL}/api/cardlink/cards_create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

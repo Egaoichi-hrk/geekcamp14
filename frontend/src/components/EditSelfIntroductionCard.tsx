@@ -252,7 +252,7 @@ const EditSelfIntroductionCard = () => {
           </Flex>
         ) : (
           <Flex align='center' direction='column'>
-            <Clipboard.Root value={`http://localhost:3000/share/${cardId}`} onClick={() => setShareAlert(!shareAlert)}>
+            <Clipboard.Root value={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/share/${cardId}`} onClick={() => setShareAlert(!shareAlert)}>
               <Clipboard.Trigger asChild>
                 <IconButton variant='ghost' size='2xl' mb={-4}>
                   <FaLink color='teal' />

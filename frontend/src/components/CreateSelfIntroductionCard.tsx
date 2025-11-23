@@ -132,7 +132,7 @@ const CreateSelfIntroductionCard = () => {
   // 🟢 共有URLコピー
   const handleCopy = async () => {
     if (!cardId) return;
-    const url = `http://localhost:3000/share/${cardId}`;
+    const url = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/share/${cardId}`;
     try {
       await navigator.clipboard.writeText(url);
       alert("URLをコピーしました！");

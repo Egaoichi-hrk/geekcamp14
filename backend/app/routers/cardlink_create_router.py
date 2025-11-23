@@ -78,7 +78,7 @@ async def create_card(card: CardCreate, user_id: str = Depends(get_current_user_
             raise HTTPException(status_code=500, detail="カードの作成に失敗しました")
 
         # 公開用URL（仮）デプロイの時に変更
-        share_url = f"http://localhost:3000/my-card/{card_id}"
+        share_url = f"{settings.FRONTEND_URL}/my-card/{card_id}"
         print(share_url)
         return {
             "message": "カードを作成しました",

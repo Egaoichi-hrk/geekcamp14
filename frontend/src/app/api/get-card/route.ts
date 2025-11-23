@@ -11,7 +11,7 @@ export async function GET() {
     }
 
     // FastAPI 側からカードデータを取得
-    const res = await fetch("http://localhost:8000/api/cardlink/cards/me", {
+    const res = await fetch(`${process.env.BACKEND_URL}/api/cardlink/cards/me`, {
   headers: { Authorization: `Bearer ${token}` },
   });
 
