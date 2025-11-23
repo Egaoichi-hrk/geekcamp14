@@ -40,8 +40,8 @@ const Share = () => {
   useEffect(() => {
     const fetchCard = async () => {
       try {
-        const API_BASE_URL = process.env.BACKEND_URL || "http://localhost:8000";
-        const res = await axios.get(`${API_BASE_URL}/api/cardlink/cards/view/${card_id}`);
+        
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cardlink/cards/view/${card_id}`);
         const data = res.data;
         if (!data) return;
 

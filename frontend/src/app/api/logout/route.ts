@@ -16,9 +16,9 @@ export async function POST(req: Request) {
     }
 
     // 🟢 FastAPI側の /logout にリクエスト送信
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "BACKEND_URL";
     await axios.post(
-      `${apiUrl}/api/auth/logout`,
+      `${process.env.BACKEND_URL}/api/auth/logout`,
       {},
       {
         headers: {

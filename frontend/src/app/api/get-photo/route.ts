@@ -15,7 +15,7 @@ export async function GET(req: Request) {
       );
     }
 
-    const res = await axios.get(`http://localhost:8000/api/cardlink/${card_id}/photo`);
+    const res = await axios.get(`${process.env.BACKEND_URL}/api/cardlink/${card_id}/photo`);
 
     return NextResponse.json(res.data);
   } catch (err: any) {

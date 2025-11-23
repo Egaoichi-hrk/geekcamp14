@@ -30,7 +30,7 @@ export async function PUT(req: Request) {
 
     // ✅ バックエンド (FastAPI) に転送
     const res = await fetch(
-      `http://localhost:8000/api/cardlink/upload_photo/${card_id}/photo`,
+      `${process.env.BACKEND_URL}/api/cardlink/upload_photo/${card_id}/photo`,
       {
         method: "PUT",
         headers: {

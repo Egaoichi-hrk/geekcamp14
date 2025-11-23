@@ -3,14 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth_router
 from app.routers import cardlink_create_router
 from app.routers import qrcode_router
+from app.core.config import settings
+
 
 app=FastAPI(title="Hackathon Backend API")
-
 
 # CORS設定
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # ここに許可するオリジンを指定
+    allow_origins=[settings.FRONTEND_URL],  # ここに許可するオリジンを指定
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
