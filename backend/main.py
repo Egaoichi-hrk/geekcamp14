@@ -4,6 +4,7 @@ from app.routers import auth_router
 from app.routers import cardlink_create_router
 from app.routers import qrcode_router
 from app.core.config import settings
+from mangum import Mangum  
 
 
 app=FastAPI(title="Hackathon Backend API")
@@ -22,6 +23,6 @@ app.include_router(auth_router.router, prefix="/api/auth", tags=["auth"])
 app.include_router(cardlink_create_router.router, prefix="/api/cardlink",tags=["cardlink"])
 app.include_router(qrcode_router.router, prefix="/api/qrcode",tags=["qrcode"])
 #FastAPIのルーティングの仕方を調べろ！
-
+handler = Mangum(app)
 
 #uvicorn main:app --reload    で起動
