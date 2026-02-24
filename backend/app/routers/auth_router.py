@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends, Header,Response
 from typing import Optional, Dict, Any
-from app.db.supabase import supabase
-from app.schemas.auth_schema import SignupRequest, LoginRequest
+from backend.app.db.supabase import supabase
+from backend.app.schemas.auth_schema import SignupRequest, LoginRequest
 
 
 router = APIRouter()

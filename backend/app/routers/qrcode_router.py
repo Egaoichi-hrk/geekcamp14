@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends,Header, UploadFile
-from app.core.config import settings
+from backend.app.core.config import settings
 import qrcode
 from fastapi.responses import StreamingResponse
 from io import BytesIO
