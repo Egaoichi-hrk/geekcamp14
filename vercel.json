@@ -12,8 +12,7 @@
   "routes": [
     {
       "src": "^/api/backend/(.*)$",
-      "dest": "backend/main.py",
-      "rewrite": true
+      "dest": "backend/main.py"
     },
     {
       "handle": "filesystem"
