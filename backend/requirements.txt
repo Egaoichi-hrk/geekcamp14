@@ -5,3 +5,6 @@ pydantic-settings
 PyJWT
 uvicorn[standard]
 email-validator
+python-multipart
+pydantic
+qrcode
