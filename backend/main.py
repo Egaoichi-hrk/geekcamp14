@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth_router
-from app.routers import cardlink_create_router
-from app.routers import qrcode_router
-from app.core.config import settings
+from backend.app.routers import auth_router
+from backend.app.routers import cardlink_create_router
+from backend.app.routers import qrcode_router
+from backend.app.core.config import settings
 from mangum import Mangum  
 
 
