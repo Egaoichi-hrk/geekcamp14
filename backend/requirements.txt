@@ -1,0 +1,6 @@
+fastapi
+mangum
+supabase
+pydantic-settings
+PyJWT
+uvicorn[standard]
