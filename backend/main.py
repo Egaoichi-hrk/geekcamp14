@@ -26,3 +26,4 @@ app.include_router(qrcode_router.router, prefix="/api/qrcode",tags=["qrcode"])
 
 
 #uvicorn main:app --reload    で起動
+#uvicorn backend.main:app --reload
