@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException, Depends,Header, UploadFile
 from pydantic import BaseModel
 from uuid import uuid4
-from app.db.supabase import supabase
-from app.db.supabase import supabase_service
+from backend.app.db.supabase import supabase
+from backend.app.db.supabase import supabase_service
 import jwt
 from datetime import date, datetime, timezone
-from app.schemas.main_schema import CardCreate,CardUpdate
-from app.core.config import settings
+from backend.app.schemas.main_schema import CardCreate,CardUpdate
+from backend.app.core.config import settings
 from fastapi import File
 from supabase import create_client, Client
 
