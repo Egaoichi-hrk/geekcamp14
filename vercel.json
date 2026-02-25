@@ -10,9 +10,6 @@
       "use": "@vercel/next"
     }
   ],
-  "functions": {
-    "backend/api/*.py": { "runtime": "python3.11" }
-  },
   "routes": [
     {
       "src": "^/api/backend/(.*)$",
