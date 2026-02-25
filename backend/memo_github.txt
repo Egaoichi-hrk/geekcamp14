@@ -1,0 +1,3 @@
+backendフォルダはhttps://github.com/aukri1690/geekcamp14.gitとhttps://github.com/Egaoichi-hrk/KnowMe_backend.gitの重複でgithubにコミットしている
+
+https://github.com/Egaoichi-hrk/KnowMe_backend.gitはRenderにデプロイ用
