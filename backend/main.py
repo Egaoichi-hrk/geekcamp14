@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.app.routers import auth_router
-from backend.app.routers import cardlink_create_router
-from backend.app.routers import qrcode_router
-from backend.app.core.config import settings
+from app.routers import auth_router
+from app.routers import cardlink_create_router
+from app.routers import qrcode_router
+from app.core.config import settings
  
 
 
@@ -17,8 +17,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
 app.include_router(auth_router.router, prefix="/api/auth", tags=["auth"])
 app.include_router(cardlink_create_router.router, prefix="/api/cardlink",tags=["cardlink"])
 app.include_router(qrcode_router.router, prefix="/api/qrcode",tags=["qrcode"])
